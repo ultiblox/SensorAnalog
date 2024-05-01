@@ -1,13 +1,24 @@
 #include "AnalogSensor.h"
 
-AnalogSensor sensor(A0); // Create an instance of AnalogSensor on analog pin A0
+void handleAnalogSensorData(int value) {
+    Serial.println(value);
+}
+
+AnalogSensor analogSensor(A0);
 
 void setup() {
-  Serial.begin(115200);
+    Serial.begin(115200);
+    analogSensor.setInterval(5000)
+      .setCallback(handleAnalogSensorData);
 }
 
 void loop() {
-  int sensorValue = sensor.read(); // Read the analog value from sensor
-  Serial.println(sensorValue);
-  delay(1000); // Delay for a second for readability of output
+    // Handle sensor via loop
+    analogSensor.loop();
+
+    // Read sensor directly
+    // int value = analogSensor.read();
+    // Serial.println(value);
+
+    delay(100); // This delay helps prevent flooding the loop; adjust as needed
 }
