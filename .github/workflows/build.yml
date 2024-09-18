@@ -19,10 +19,7 @@ jobs:
     - name: Install Arduino CLI
       run: |
         curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
-        mv bin/arduino-cli /usr/local/bin/
-
-    - name: Add Arduino CLI to PATH
-      run: echo "::add-path::/home/runner/work/SensorAnalog/SensorAnalog/bin"
+        sudo mv bin/arduino-cli /usr/local/bin/
 
     - name: Install Arduino AVR Core
       run: |
