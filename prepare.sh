@@ -24,3 +24,6 @@ fi
 
 # Verify the installation
 arduino-cli version
+
+# Clone and install required libraries
+bash prepare-libraries.sh
