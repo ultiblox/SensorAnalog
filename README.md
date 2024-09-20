@@ -1,7 +1,7 @@
-# AnalogSensor Library
+# SensorAnalog Library
 
 ## Overview
-The `AnalogSensor` library provides functionality to read and calibrate analog sensors connected to Arduino boards. It supports reading raw sensor data, applying custom calibration ranges, and triggering callbacks at specified intervals.
+The `SensorAnalog` library provides functionality to read and calibrate analog sensors connected to Arduino boards. It supports reading raw sensor data, applying custom calibration ranges, and triggering callbacks at specified intervals.
 
 ## Features
 - Customizable calibration range for sensor values.
@@ -13,19 +13,19 @@ The `AnalogSensor` library provides functionality to read and calibrate analog s
 
 ### Initialization
 ```cpp
-#include "AnalogSensor.h"
-AnalogSensor analogSensor(A0);
+#include "SensorAnalog.h"
+SensorAnalog SensorAnalog(A0);
 ```
 
 ### Set Calibration
 ```cpp
-analogSensor.setCalibrationLow(100)
+SensorAnalog.setCalibrationLow(100)
           .setCalibrationHigh(900);
 ```
 
 ### Set Interval and Callback
 ```cpp
-analogSensor.setInterval(1000)
+SensorAnalog.setInterval(1000)
           .setCallback(handleSensorData);
 ```
 
@@ -40,14 +40,14 @@ This example demonstrates how to manually read both raw and calibrated sensor va
 - Example: `examples/ManualSensorReading/ManualSensorReading.ino`
 
 ## Installation
-You can install the **AnalogSensor** library in two ways: by copying it to your Arduino libraries folder or by creating a symlink for easier development.
+You can install the **SensorAnalog** library in two ways: by copying it to your Arduino libraries folder or by creating a symlink for easier development.
 
 ### 1. Standard Installation (Copy)
 To install the library by copying it to the Arduino libraries folder, run the following command:
 ```bash
 bash install.sh
 ```
-This will copy the library to the Arduino libraries folder at `~/Arduino/libraries/AnalogSensor`.
+This will copy the library to the Arduino libraries folder at `~/Arduino/libraries/SensorAnalog`.
 
 ### 2. Development Installation (Symlink)
 If you are actively developing the library and want to create a symbolic link instead of copying the files, run:

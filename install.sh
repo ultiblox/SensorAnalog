@@ -10,7 +10,7 @@ if [ ! -d "$ARDUINO_LIBRARIES_DIR" ]; then
 fi
 
 # Copy the current library to Arduino libraries folder
-LIBRARY_NAME="AnalogSensor"
+LIBRARY_NAME="SensorAnalog"
 cp -r "$(pwd)" "$ARDUINO_LIBRARIES_DIR/$LIBRARY_NAME"
 
 echo "$LIBRARY_NAME installed successfully to $ARDUINO_LIBRARIES_DIR"

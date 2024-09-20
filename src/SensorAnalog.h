@@ -3,9 +3,11 @@
 
 #include "Arduino.h"
 #include <EEPROM.h>
+#include "SerialLogger.h"  // Use SerialLogger instead
 
 #define VALID_FLAG 0xCAFE
 
+// Define calibration and interval storage locations in EEPROM
 #define CAL_LOW_ADDR 0
 #define CAL_HIGH_ADDR (CAL_LOW_ADDR + sizeof(int))
 #define CAL_LOW_FLAG_ADDR (CAL_HIGH_ADDR + sizeof(int))
@@ -36,6 +38,7 @@ private:
     int _calLow;
     int _calHigh;
     void (*_callback)(int);
+
     int mapSensorValue(int value, int fromLow, int fromHigh, int toLow, int toHigh);
 };
 
