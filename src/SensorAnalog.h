@@ -3,11 +3,9 @@
 
 #include "Arduino.h"
 #include <EEPROM.h>
-#include "SerialLogger.h"  // Use SerialLogger instead
 
 #define VALID_FLAG 0xCAFE
 
-// Define calibration and interval storage locations in EEPROM
 #define CAL_LOW_ADDR 0
 #define CAL_HIGH_ADDR (CAL_LOW_ADDR + sizeof(int))
 #define CAL_LOW_FLAG_ADDR (CAL_HIGH_ADDR + sizeof(int))
@@ -21,8 +19,8 @@ public:
     SensorAnalog& setCallback(void (*callback)(int));
     SensorAnalog& setCalibrationLow(int low);
     SensorAnalog& setCalibrationHigh(int high);
-    SensorAnalog& setDefaultCalibrationLow(int low);
-    SensorAnalog& setDefaultCalibrationHigh(int high);
+    SensorAnalog& setCalibrationDefaultLow(int low);
+    SensorAnalog& setCalibrationDefaultHigh(int high); // New method to set the suffix
     int readCalibrationLow();
     int readCalibrationHigh();
     SensorAnalog& loadCalibration();
@@ -30,6 +28,7 @@ public:
     int readRaw();
     int readCalibrated();
     void loop();
+    
 private:
     int _pin;
     unsigned long _interval;
@@ -38,7 +37,7 @@ private:
     int _calLow;
     int _calHigh;
     void (*_callback)(int);
-
+    char suffix[8] = "";  // Storage for the suffix
     int mapSensorValue(int value, int fromLow, int fromHigh, int toLow, int toHigh);
 };
 

@@ -4,8 +4,8 @@
 BOARD_TYPE="arduino:avr:uno"
 
 # Directory paths
-LIBRARY_PATH=$(pwd)
-EXAMPLES_PATH="$LIBRARY_PATH/examples"
+LIBRARY_PATH="$(pwd)/src"
+EXAMPLES_PATH="$(pwd)/examples"
 
 # Check if arduino-cli is installed
 if ! command -v arduino-cli &> /dev/null
@@ -30,4 +30,3 @@ for example in "$EXAMPLES_PATH"/*; do
 done
 
 echo "All examples compiled successfully."
-

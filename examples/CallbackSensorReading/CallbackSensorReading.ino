@@ -11,14 +11,15 @@ void sensorDataCallback(int calibratedValue) {
 }
 
 void setup() {
-    Serial.begin(9600);
+    Serial.begin(115200);
     Serial.println("Serial started...");  // Fallback for serial output
     LOG_INFO("Setting up sensor...");
     
     // Set calibration range and interval, and provide callback
-    sensor.setCalibrationLow(100)
-          .setCalibrationHigh(900)
+    sensor.setCalibrationDefaultLow(100)
+          .setCalibrationDefaultHigh(900)
           .setInterval(1000)
+          .loadCalibration()
           .setCallback(sensorDataCallback);
 
     LOG_INFO("Sensor setup complete.");
@@ -28,3 +29,4 @@ void loop() {
     // Update the sensor data at the specified interval
     sensor.loop();
 }
+

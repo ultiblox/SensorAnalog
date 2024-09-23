@@ -5,7 +5,7 @@
 SensorAnalog sensor(A0);  // Use pin A0 for the sensor
 
 void setup() {
-    Serial.begin(9600);
+    Serial.begin(115200);
     Serial.println("Serial started...");
     LOG_INFO("Setting up sensor...");
 
@@ -19,11 +19,11 @@ void setup() {
 void loop() {
     // Read the raw value
     int rawValue = sensor.readRaw();
-    LOG_INFO("Raw sensor value: " + String(rawValue));
+    //LOG_INFO("Raw sensor value: " + String(rawValue));
 
     // Read the calibrated value
     int calibratedValue = sensor.readCalibrated();
-    LOG_INFO("Calibrated sensor value: " + String(calibratedValue));
+    //LOG_INFO("Calibrated sensor value: " + String(calibratedValue));
 
     // Wait before reading again
     delay(1000);
