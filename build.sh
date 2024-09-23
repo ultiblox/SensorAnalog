@@ -4,7 +4,7 @@
 BOARD_TYPE="arduino:avr:uno"
 
 # Directory paths
-LIBRARY_PATH="$(pwd)/src"
+LIBRARY_PATH="$(pwd)"
 EXAMPLES_PATH="$(pwd)/examples"
 
 # Check if arduino-cli is installed
