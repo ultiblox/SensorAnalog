@@ -16,7 +16,7 @@ class SensorAnalog {
 public:
     SensorAnalog(int pin);
     SensorAnalog& setInterval(unsigned long interval);
-    SensorAnalog& setCallback(void (*callback)(int));
+    SensorAnalog& onDataReceived(void (*callback)(int));
     SensorAnalog& setCalibrationLow(int low);
     SensorAnalog& setCalibrationHigh(int high);
     SensorAnalog& setCalibrationDefaultLow(int low);

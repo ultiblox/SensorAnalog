@@ -26,7 +26,7 @@ SensorAnalog.setCalibrationLow(100)
 ### Set Interval and Callback
 ```cpp
 SensorAnalog.setInterval(1000)
-          .setCallback(handleSensorData);
+          .onDataReceived(handleDataReceived);
 ```
 
 ## Examples

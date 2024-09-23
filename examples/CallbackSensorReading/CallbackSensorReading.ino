@@ -5,7 +5,7 @@
 SensorAnalog sensor(A0);  // Use pin A0 for the sensor
 
 // Callback function to process sensor data
-void sensorDataCallback(int calibratedValue) {
+void handleDataReceived(int calibratedValue) {
     int rawValue = sensor.readRaw();
     Serial.println("Raw: " + String(rawValue) + ", Calibrated: " + String(calibratedValue));  // Log sensor readings
 }
@@ -20,7 +20,7 @@ void setup() {
           .setCalibrationDefaultHigh(900)
           .setInterval(1000)
           .loadCalibration()
-          .setCallback(sensorDataCallback);
+          .onDataReceived(handleDataReceived);
 
     //LOG_INFO("Sensor setup complete.");
 }

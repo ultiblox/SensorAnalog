@@ -42,7 +42,7 @@ SensorAnalog& SensorAnalog::setInterval(unsigned long interval) {
 }
 
 // Sets the callback function for sensor readings
-SensorAnalog& SensorAnalog::setCallback(void (*callback)(int)) {
+SensorAnalog& SensorAnalog::onDataReceived(void (*callback)(int)) {
     _callback = callback;
     //LOG_INFO("Callback set for sensor readings.");
     return *this;
