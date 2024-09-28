@@ -5,7 +5,7 @@ SensorAnalog::SensorAnalog(int pin)
     : _pin(pin), _interval(1000), _lastReadTime(0), _callback(nullptr), _calLow(100), _calHigh(900) {
     pinMode(_pin, INPUT);
 
-    Logger.logln("Constructing SensorAnalog...");
+    Logger.infoln("Constructing SensorAnalog...");
     // Set default calibration values in case no EEPROM data is available
     setCalibrationDefaultLow(100);
     setCalibrationDefaultHigh(900);
@@ -54,7 +54,7 @@ SensorAnalog& SensorAnalog::setCalibrationLow(int low) {
     EEPROM.put(CAL_LOW_ADDR, _calLow);
     EEPROM.put(CAL_LOW_FLAG_ADDR, VALID_FLAG);
     //Logger.log("Setting sensor low: ");
-    //Logger.logln(_calLow);
+    //Logger.infoln(_calLow);
     //LOG_INFO("Calibration low saved to EEPROM: " + String(_calLow));
     return *this;
 }
@@ -66,7 +66,7 @@ SensorAnalog& SensorAnalog::setCalibrationHigh(int high) {
     EEPROM.put(CAL_HIGH_FLAG_ADDR, VALID_FLAG);
     //LOG_INFO("Calibration high saved to EEPROM: " + String(_calHigh));
     //Logger.log("Setting sensor high: ");
-    //Logger.logln(_calHigh);
+    //Logger.infoln(_calHigh);
     //Serial.println("Calibration high saved to EEPROM: " + String(_calHigh));
     return *this;
 }
@@ -77,15 +77,15 @@ SensorAnalog& SensorAnalog::loadCalibration() {
     EEPROM.get(CAL_LOW_FLAG_ADDR, flagLow);
     EEPROM.get(CAL_HIGH_FLAG_ADDR, flagHigh);
     
-    //Logger.logln("Loading calibration...");
+    //Logger.infoln("Loading calibration...");
     //LOG_INFO("Loading calibration");
     //Serial.println("Loading calibration values from EEPROM");
 
     // Load calibration from EEPROM only if valid flags are set
     if (flagLow == VALID_FLAG) {
         EEPROM.get(CAL_LOW_ADDR, _calLow);
-        Logger.log("Sensor low: ");
-        Logger.logln(_calLow);
+        Logger.info("Sensor low: ");
+        Logger.infoln(_calLow);
     } else {
         // LOG_DEBUG("Using default low calibration: %d", _calLow);
     }
@@ -98,8 +98,8 @@ SensorAnalog& SensorAnalog::loadCalibration() {
     //Serial.println();
         // LOG_DEBUG("Loaded high calibration from EEPROM: %d", _calHigh);
 
-        Logger.log("Sensor high: ");
-        Logger.logln(_calHigh);
+        Logger.info("Sensor high: ");
+        Logger.infoln(_calHigh);
     } else {
         // LOG_DEBUG("Using default high calibration: %d", _calHigh);
     }
