@@ -1,32 +1,33 @@
 #include "SensorAnalog.h"
-#include "LoggerConfig.h"  // Include logger configuration
+#include "LoggerConfig.h"
 #include "SerialLogger.h"
 
+SerialLogger Logger;
 SensorAnalog sensor(A0);  // Use pin A0 for the sensor
 
-// Callback function to process sensor data
-void handleDataReceived(int calibratedValue) {
-    int rawValue = sensor.readRaw();
-    Serial.println("Raw: " + String(rawValue) + ", Calibrated: " + String(calibratedValue));  // Log sensor readings
-}
-
 void setup() {
-    Serial.begin(115200);
-    Serial.println("Serial started...");  // Fallback for serial output
-    //LOG_INFO("Setting up sensor...");
+    Logger.begin(115200);
+    Logger.println("Serial started...");
     
-    // Set calibration range and interval, and provide callback
-    sensor.setCalibrationDefaultLow(100)
-          .setCalibrationDefaultHigh(900)
+    // Set up the sensor
+    sensor.init()
+          .setCalibrationLow(100)
+          .setCalibrationHigh(900)
           .setInterval(1000)
-          .loadCalibration()
           .onDataReceived(handleDataReceived);
-
-    //LOG_INFO("Sensor setup complete.");
 }
 
 void loop() {
-    // Update the sensor data at the specified interval
+    // Trigger a sensor processing loop
     sensor.loop();
+}
+
+// Event handler for data received
+void handleDataReceived(int calibratedValue) {  
+    int rawValue = sensor.readRaw();
+    
+    Logger.data("Calibrated", "C", calibratedValue);    
+    Logger.data("Raw", "R", rawValue);
+    Logger.dataln();
 }
 

@@ -13,22 +13,6 @@
 #define INTERVAL_ADDR (CAL_HIGH_FLAG_ADDR + sizeof(int))
 
 class SensorAnalog {
-public:
-    SensorAnalog(int pin);
-    SensorAnalog& setInterval(unsigned long interval);
-    SensorAnalog& onDataReceived(void (*callback)(int));
-    SensorAnalog& setCalibrationLow(int low);
-    SensorAnalog& setCalibrationHigh(int high);
-    SensorAnalog& setCalibrationDefaultLow(int low);
-    SensorAnalog& setCalibrationDefaultHigh(int high); // New method to set the suffix
-    int readCalibrationLow();
-    int readCalibrationHigh();
-    SensorAnalog& loadCalibration();
-    SensorAnalog& loadInterval();
-    int readRaw();
-    int readCalibrated();
-    void loop();
-    
 private:
     int _pin;
     unsigned long _interval;
@@ -37,8 +21,29 @@ private:
     int _calLow;
     int _calHigh;
     void (*_callback)(int);
-    char suffix[8] = "";  // Storage for the suffix
+    
     int mapSensorValue(int value, int fromLow, int fromHigh, int toLow, int toHigh);
+
+public:
+    SensorAnalog(int pin);
+
+    SensorAnalog& init();
+    int read();  // Calibrated sensor reading
+    int readRaw();  // Raw sensor reading
+    SensorAnalog& setInterval(unsigned long interval);
+    SensorAnalog& onDataReceived(void (*callback)(int));
+    void loop();
+
+    SensorAnalog& setCalibrationLow(int low);
+    SensorAnalog& setCalibrationHigh(int high);
+    SensorAnalog& loadCalibration();
+    SensorAnalog& setCalibrationDefaultLow(int low);
+    SensorAnalog& setCalibrationDefaultHigh(int high);
+
+    int readCalibrationLow();
+    int readCalibrationHigh();
+    SensorAnalog& loadInterval();
 };
 
 #endif
+
