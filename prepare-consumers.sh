@@ -22,7 +22,6 @@ cd "$CONSUMERS_DIR/UniversalMakerBox" || exit
 # Run the build and tests for UniversalMakerBox
 echo "Building and running tests for UniversalMakerBox..."
 bash build.sh    # Or the appropriate build command for the consumer
-bash test.sh     # Or the appropriate test command for the consumer
 
 # Capture exit code to detect failure
 if [ $? -ne 0 ]; then

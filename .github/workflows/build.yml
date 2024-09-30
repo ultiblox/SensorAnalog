@@ -26,11 +26,11 @@ jobs:
         arduino-cli core update-index
         arduino-cli core install arduino:avr
 
-    - name: Run prepare script
+    - name: Prepare
       run: |
         bash prepare.sh
 
-    - name: Run build script
+    - name: Build script
       run: |
         bash build.sh
 
@@ -41,6 +41,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Run prepare-consumers script
+    - name: Prepare arduino cli
       run: |
-        bash prepare-consumers.sh
+        bash prepare-arduino-cli.sh
+        
+    - name: Build consumers
+      run: |
+        bash build-consumers.sh
