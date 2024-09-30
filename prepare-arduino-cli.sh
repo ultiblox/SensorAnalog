@@ -22,3 +22,6 @@ fi
 
 # Verify the installation
 arduino-cli version
+
+arduino-cli core update-index
+arduino-cli core install arduino:avr
