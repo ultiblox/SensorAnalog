@@ -1,5 +1,4 @@
 #include "SensorAnalog.h"
-#include "SerialLogger.h"  // For logging
 
 SensorAnalog::SensorAnalog(int pin)
     : _pin(pin), _interval(1000), _lastReadTime(0), _callback(nullptr), _calLow(100), _calHigh(900) {
