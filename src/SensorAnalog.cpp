@@ -39,6 +39,8 @@ SensorAnalog& SensorAnalog::setCalibrationLow(int low) {
     _calLow = low;
     EEPROM.put(CAL_LOW_ADDR, _calLow);
     EEPROM.put(CAL_LOW_FLAG_ADDR, VALID_FLAG);
+    // Serial.print("Setting low: ");
+    // Serial.println(_calLow);
     return *this;
 }
 
@@ -46,6 +48,8 @@ SensorAnalog& SensorAnalog::setCalibrationHigh(int high) {
     _calHigh = high;
     EEPROM.put(CAL_HIGH_ADDR, _calHigh);
     EEPROM.put(CAL_HIGH_FLAG_ADDR, VALID_FLAG);
+    // Serial.print("Setting high: ");
+    // Serial.println(_calHigh);
     return *this;
 }
 
@@ -53,8 +57,20 @@ SensorAnalog& SensorAnalog::loadCalibration() {
     int flagLow, flagHigh;
     EEPROM.get(CAL_LOW_FLAG_ADDR, flagLow);
     EEPROM.get(CAL_HIGH_FLAG_ADDR, flagHigh);
-    if (flagLow == VALID_FLAG) EEPROM.get(CAL_LOW_ADDR, _calLow);
-    if (flagHigh == VALID_FLAG) EEPROM.get(CAL_HIGH_ADDR, _calHigh);
+    if (flagLow == VALID_FLAG)
+    {
+        EEPROM.get(CAL_LOW_ADDR, _calLow);
+
+        // Serial.print("Loading low: ");
+        // Serial.println(_calLow);
+    }
+    if (flagHigh == VALID_FLAG)
+    {
+        EEPROM.get(CAL_HIGH_ADDR, _calHigh);
+
+        // Serial.print("Loading high: ");
+        // Serial.println(_calHigh);
+    }
     return *this;
 }
 
