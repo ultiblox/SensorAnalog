@@ -74,5 +74,6 @@ This script will install the latest version of Arduino CLI to your system or use
 - Arduino Core Library
 - EEPROM Library
 
+
 ## License
-This library is open source, distributed under the MIT License.
+[This project is licensed under the UltiBlox License.](https://ultiblox.org/license)
