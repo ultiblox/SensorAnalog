@@ -1,79 +1,108 @@
-# SensorAnalog Library
+# UltiBlox SensorAnalog Library
+*Easily read and calibrate analog sensor values with custom intervals and callbacks.*
+
+[UltiBlox on GitHub](https://github.com/UltiBlox/SensorAnalog) | [UltiBlox Home](https://ultiblox.org)
 
 ## Overview
-The `SensorAnalog` library provides functionality to read and calibrate analog sensors connected to Arduino boards. It supports reading raw sensor data, applying custom calibration ranges, and triggering callbacks at specified intervals.
+The `SensorAnalog` library enables straightforward reading and calibration of analog sensors connected to Arduino boards. It includes customizable calibration ranges, periodic reading with user-defined intervals, and callbacks for handling data, with optional storage of calibration data in EEPROM for persistence.
 
 ## Features
-- Customizable calibration range for sensor values.
-- Periodic sensor reading at user-defined intervals.
-- Callback mechanism to process sensor data.
-- EEPROM-based storage for calibration data.
+- **Custom Calibration Range**: Define low and high calibration values to map sensor readings.
+- **Periodic Reading with Callbacks**: Set an interval for automated sensor polling, with callback support.
+- **EEPROM Storage**: Optionally store calibration values and intervals in EEPROM.
+- **Flexible Data Access**: Read raw or calibrated sensor values as needed.
 
-## Usage
+## Installation
 
-### Initialization
+### Option 1: Arduino Library Manager Installation (Recommended)
+1. Open the **Arduino IDE**.
+2. Go to **Tools > Manage Libraries**.
+3. Search for **UltiBlox SensorAnalog** and click **Install**.
+4. Access example sketches under **File > Examples > UltiBlox SensorAnalog**.
+
+### Option 2: Manual Installation (for Development and Customization)
+1. **Clone the Repository**:
+   ```bash
+   git clone git@github.com:UltiBlox/SensorAnalog.git ~/workspace/SensorAnalog
+   cd ~/workspace/SensorAnalog
+   ```
+
+2. **Prepare the Environment**:
+   Run the `prepare.sh` script to set up dependencies:
+   ```bash
+   bash prepare.sh
+   ```
+
+3. **Install the Library**:
+   - **Copy Installation**:
+     ```bash
+     bash install.sh
+     ```
+   - **Symlink Installation** (for active development):
+     ```bash
+     bash install-symlink.sh
+     ```
+
+4. **Build Examples**:
+   Compile example sketches with:
+   ```bash
+   bash build.sh
+   ```
+
+## Dependencies
+- **EEPROM Library**: Required for storing calibration data.
+- **Arduino Core Library**
+- **SerialLogger**: Enables serial output for logging sensor values.
+
+## Examples Directory
+- **[CallbackSensorReading.ino](examples/CallbackSensorReading/CallbackSensorReading.ino)**: Sets up periodic sensor reading with a callback function to log calibrated and raw values.
+- **[ManualSensorReading.ino](examples/ManualSensorReading/ManualSensorReading.ino)**: Manually reads and logs both raw and calibrated sensor values.
+
+## Methods
+
+### Initialize the Sensor
 ```cpp
-#include "SensorAnalog.h"
-SensorAnalog SensorAnalog(A0);
+init()
 ```
+Initializes the sensor, including setting the pin mode and loading any stored calibration values.
 
-### Set Calibration
+### Set Calibration Defaults
 ```cpp
-SensorAnalog.setCalibrationLow(100)
-          .setCalibrationHigh(900);
+setCalibrationDefaultLow(int low)
+setCalibrationDefaultHigh(int high)
 ```
+Sets default calibration values for the sensor. These values are loaded at startup if EEPROM does not contain stored calibration values.
+
+### Set Calibration Range
+```cpp
+setCalibrationLow(int low)
+setCalibrationHigh(int high)
+```
+Defines the low and high values for calibration mapping, saving these values to EEPROM for persistence.
+
+### Load Calibration Data
+```cpp
+loadCalibration()
+```
+Loads calibration values from EEPROM if available.
 
 ### Set Interval and Callback
 ```cpp
-SensorAnalog.setInterval(1000)
-          .onDataReceived(handleDataReceived);
+setInterval(unsigned long interval)
+onDataReceived(void (*callback)(int))
 ```
+Sets the interval for periodic sensor reads (in milliseconds) and specifies a callback function that executes on each read.
 
-## Examples
-
-### 1. Callback Sensor Reading
-This example demonstrates how to use the callback mechanism to automatically read sensor values at a specified interval.
-- Example: `examples/CallbackSensorReading/CallbackSensorReading.ino`
-
-### 2. Manual Sensor Reading
-This example demonstrates how to manually read both raw and calibrated sensor values.
-- Example: `examples/ManualSensorReading/ManualSensorReading.ino`
-
-## Installation
-You can install the **SensorAnalog** library in two ways: by copying it to your Arduino libraries folder or by creating a symlink for easier development.
-
-### 1. Standard Installation (Copy)
-To install the library by copying it to the Arduino libraries folder, run the following command:
-```bash
-bash install.sh
+### Read Sensor Values
+```cpp
+readRaw()
 ```
-This will copy the library to the Arduino libraries folder at `~/Arduino/libraries/SensorAnalog`.
+Returns the raw sensor reading directly from the analog pin.
 
-### 2. Development Installation (Symlink)
-If you are actively developing the library and want to create a symbolic link instead of copying the files, run:
-```bash
-bash install-symlink.sh
+```cpp
+read()
 ```
-This will create a symlink from your current workspace to the Arduino libraries folder, so any changes you make in the workspace will reflect immediately in the Arduino IDE.
-
-## Building the Library
-You can compile the example sketches using the **`build.sh`** script:
-```bash
-bash build.sh
-```
-This script uses the Arduino CLI to compile all the example sketches in the library.
-
-## Preparing the Environment
-If you don't have Arduino CLI installed, you can install it using the **`prepare.sh`** script:
-```bash
-bash prepare.sh
-```
-This script will install the latest version of Arduino CLI to your system or user directory.
-
-## Dependencies
-- Arduino Core Library
-- EEPROM Library
-
+Returns the calibrated sensor reading, mapped to a scale from 0 to 100.
 
 ## License
 [This project is licensed under the UltiBlox License.](https://ultiblox.org/license)
