@@ -47,7 +47,6 @@ public:
     SensorAnalog& setCalibrationDefaultHigh(int high);
 
     SensorAnalog& setSampleSize(int size);          // Adjust smoothing behavior
-    SensorAnalog& setSampleInterval(unsigned long interval);  // Adjust sample timing
 
     SensorAnalog& loadInterval();
 };
