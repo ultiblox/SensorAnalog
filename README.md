@@ -17,8 +17,8 @@ The `SensorAnalog` library enables straightforward reading and calibration of an
 ### Option 1: Arduino Library Manager Installation (Recommended)
 1. Open the **Arduino IDE**.
 2. Go to **Tools > Manage Libraries**.
-3. Search for **UltiBlox SensorAnalog** and click **Install**.
-4. Access example sketches under **File > Examples > UltiBlox SensorAnalog**.
+3. Search for **UltiBlox-SensorAnalog** and click **Install**.
+4. Access example sketches under **File > Examples > UltiBlox-SensorAnalog**.
 
 ### Option 2: Manual Installation (for Development and Customization)
 1. **Clone the Repository**:
