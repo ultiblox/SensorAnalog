@@ -98,6 +98,12 @@ onDataReceived(void (*callback)(int))
 ```
 Defines a callback function to be executed after each periodic sensor read. The callback receives the latest sensor reading as an argument.
 
+### Set Sample Size
+```cpp
+setSampleSize(int size)
+```
+Specifies the number of samples used in the smoothing algorithm. Larger sample sizes provide smoother outputs but reduce responsiveness to rapid changes. Smaller sample sizes result in less smoothing but greater responsiveness.
+
 
 ### Read Sensor Values
 ```cpp

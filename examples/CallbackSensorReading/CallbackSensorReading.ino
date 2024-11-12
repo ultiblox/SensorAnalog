@@ -3,26 +3,24 @@
 #include "SerialLogger.h"
 
 SerialLogger Logger;
-SensorAnalog sensor(A0);  // Use pin A0 for the sensor
+SensorAnalog sensor(A0);
 
 void setup() {
     Logger.begin(115200);
     Logger.println("Serial started...");
     
-    // Set up the sensor
     sensor.init()
-          .setCalibrationLow(100)
-          .setCalibrationHigh(900)
-          .setInterval(1000)
+          .setCalibrationLow(0)
+          .setCalibrationHigh(1024)
+          .setInterval(100)
+          .setSampleSize(10)
           .onDataReceived(handleDataReceived);
 }
 
 void loop() {
-    // Trigger a sensor processing loop
     sensor.loop();
 }
 
-// Event handler for data received
 void handleDataReceived(int calibratedValue) {  
     int rawValue = sensor.readRaw();
     
