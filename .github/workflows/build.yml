@@ -63,6 +63,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Set Up Git User
+      run: |
+        git config --global user.name "${{ github.actor }}"
+        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
     - name: Run Version Increment Script (Only if Build Succeeds)
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
