@@ -86,12 +86,18 @@ loadCalibration()
 ```
 Loads calibration values from EEPROM if available.
 
-### Set Interval and Callback
+### Set Interval
 ```cpp
 setInterval(unsigned long interval)
+```
+Sets the interval for periodic sensor reads, in milliseconds. The sensor will automatically read values at this interval.
+
+### Set Callback
+```cpp
 onDataReceived(void (*callback)(int))
 ```
-Sets the interval for periodic sensor reads (in milliseconds) and specifies a callback function that executes on each read.
+Defines a callback function to be executed after each periodic sensor read. The callback receives the latest sensor reading as an argument.
+
 
 ### Read Sensor Values
 ```cpp
