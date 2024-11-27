@@ -1,1 +1,1 @@
-UltiBlox-SerialLogger,https://github.com/ultiblox/SerialLogger.git
+SerialLogger,https://github.com/ultiblox/SerialLogger.git
