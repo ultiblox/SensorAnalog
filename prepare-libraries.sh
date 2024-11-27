@@ -1,21 +1,57 @@
 #!/bin/bash
 
-# Function to clone libraries if not already present
-install_library() {
-  local LIBRARY_NAME="$1"
-  local LIBRARY_PATH="$HOME/Arduino/libraries/$LIBRARY_NAME"
-  local GIT_URL="$2"
+echo "Preparing dependencies for UltiBlox-SensorAnalog..."
 
-  if [ ! -d "$LIBRARY_PATH" ]; then
-    echo "Cloning $LIBRARY_NAME into Arduino libraries folder..."
-    git clone "$GIT_URL" "$LIBRARY_PATH"
-  else
-    echo "$LIBRARY_NAME already exists, skipping clone."
-  fi
-}
+# Path to dependencies.txt
+DEPENDENCIES_FILE="./dependencies.txt"
+PARENT_DIR=$(dirname "$(pwd)")
 
-# Install SerialLogger from GitHub
-install_library "SerialLogger" "https://github.com/makers-multiverse/SerialLogger.git"
+# Ensure dependencies.txt exists
+if [ ! -f "${DEPENDENCIES_FILE}" ]; then
+  echo "Error: dependencies.txt not found."
+  exit 1
+fi
 
-# Finish
-echo "Library preparation complete."
+# Read dependencies and process each one
+while IFS=',' read -r DEP_NAME GIT_URL || [ -n "$DEP_NAME" ]; do
+    # Trim spaces and handle carriage returns
+    DEP_NAME=$(echo "${DEP_NAME}" | tr -d '\r' | sed 's/^[ \t]*//;s/[ \t]*$//')
+    GIT_URL=$(echo "${GIT_URL}" | tr -d '\r' | sed 's/^[ \t]*//;s/[ \t]*$//')
+
+    # Skip empty or invalid lines
+    if [[ -z "$DEP_NAME" || -z "$GIT_URL" ]]; then
+        echo "Skipping empty or invalid line"
+        continue
+    fi
+
+    echo "Processing dependency: $DEP_NAME"
+
+    DEP_PATH="$PARENT_DIR/$DEP_NAME"
+
+    if [ ! -d "${DEP_PATH}" ]; then
+        echo "Cloning $DEP_NAME into $PARENT_DIR..."
+        git clone "$GIT_URL" "$DEP_PATH" || {
+            echo "Error: Failed to clone $DEP_NAME. Skipping."
+            continue
+        }
+    else
+        echo "Updating $DEP_NAME..."
+        git -C "$DEP_PATH" pull || {
+            echo "Error: Failed to update $DEP_NAME. Skipping."
+            continue
+        }
+    fi
+
+    # Run the dependency's prepare.sh if it exists
+    if [ -f "$DEP_PATH/prepare.sh" ]; then
+        echo "Running prepare.sh for $DEP_NAME..."
+        bash "$DEP_PATH/prepare.sh" || {
+            echo "Error: Failed to prepare $DEP_NAME. Skipping."
+            continue
+        }
+    else
+        echo "No prepare.sh found for $DEP_NAME. Skipping preparation."
+    fi
+done < "$DEPENDENCIES_FILE"
+
+echo "Dependencies for UltiBlox-SensorAnalog prepared successfully."
